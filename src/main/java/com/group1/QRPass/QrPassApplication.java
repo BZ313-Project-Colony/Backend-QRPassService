@@ -24,7 +24,19 @@ public class QrPassApplication {
 										PasswordEncoder passwordEncoder){
 		return args -> {
 			if (roleRepository.findByAuthority("ADMIN").isPresent()) return;
-			roleRepository.save(new Role(1L,"ADMIN"));
+			Role adminRole = new Role(0L,"ADMIN");
+			Role userRole = new Role(0L,"USER");
+			roleRepository.save(adminRole);
+			roleRepository.save(userRole);
+			User admin = new User(0L,"admin",
+							passwordEncoder.encode("12345678"),
+							new HashSet<>(Set.of(adminRole)));
+			User user = new User(0L,"abc",
+					passwordEncoder.encode("1234"),
+					new HashSet<>(Set.of(userRole)));
+			userRepository.save(admin);
+			userRepository.save(user);
+
 		};
 	}
 }

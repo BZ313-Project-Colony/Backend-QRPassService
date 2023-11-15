@@ -28,7 +28,7 @@ public class TokenService {
         JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(Instant.now())
-                .claim("role", scopeOfRoles)
+                .claim("roles", scopeOfRoles)
                 .build();
         return jwtEncoder.encode(JwtEncoderParameters.from(jwtClaimsSet)).getTokenValue();
     }

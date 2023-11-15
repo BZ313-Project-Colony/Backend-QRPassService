@@ -61,6 +61,7 @@ public class SecurityConfiguration {
                 .cors(withDefaults())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/v1/auth/**").permitAll();
+                    auth.requestMatchers("/hello").hasAuthority("ROLE_ADMIN");
                     auth.anyRequest().authenticated();
                 });
         httpSecurity.oauth2ResourceServer( (oauth2) -> oauth2.jwt(jwtConfigurer ->
