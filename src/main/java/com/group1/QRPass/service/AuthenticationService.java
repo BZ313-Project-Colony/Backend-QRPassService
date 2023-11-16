@@ -47,7 +47,7 @@ public class AuthenticationService {
         if (userService.isUserExistByName(createUserRequest.username())) {
             throw new UserAlreadyExistException("User with this nickname is already exist!");
         }
-        Role role = roleRepository.findByAuthority("ADMIN")
+        Role role = roleRepository.findByAuthority("USER")
                 .orElseThrow(() -> new RoleNotFoundException("Role does not exist!"));
         Set<Role> authorities = new HashSet<>();
         authorities.add(role);

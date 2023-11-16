@@ -24,7 +24,7 @@ public class UserService implements UserDetailsService{
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User is not valid"));
     }
-    public User createUser(String username, String password, Set<Role> authorities){
+    protected User createUser(String username, String password, Set<Role> authorities){
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
