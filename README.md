@@ -1,1 +1,13 @@
-Documentation
+# Documentation
+- **H2 Inmemory is used in this application**
+	- It is going to be switched to Postgre when it ready for deployment, meanwhile it is advised to use this service in you local machine.
+- **How to use end-points?**
+	- POST localhost:8081/v1/auth/login 
+		-  username: admin
+		- password: 12345678
+		- Use those credentials to get **Bearer Token**
+	- GET localhost:8081/hello
+		- This end-point is for only test purpose to check **Role Based System** is working or not.
+- **Warning!**
+	- Two different users with different roles are created each time you start the application from command line runner. It is not safe approach and but is only implemented for test purposes!!!
+	- The actual approach to create admin user is going to be via postgre.
