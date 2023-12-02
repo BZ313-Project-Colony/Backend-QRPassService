@@ -5,15 +5,13 @@ import com.group1.QRPass.dto.response.GetEventResponse;
 import com.group1.QRPass.exception.EventNotFoundException;
 import com.group1.QRPass.model.Event;
 import com.group1.QRPass.repository.EventRepository;
-import org.hibernate.sql.ast.tree.expression.Collation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -35,8 +33,8 @@ public class EventServiceTest {
         List<Event> eventList = Arrays.asList(new Event(), new Event());
         when(eventRepository.findAll()).thenReturn(eventList);
         when(eventDtoConverter.convertToGetEventResponse(new Event()))
-                .thenReturn(new GetEventResponse(1L,"test",
-                        Timestamp.valueOf(LocalDateTime.now())));
+                .thenReturn(new GetEventResponse(1L,"test","test_place",
+                        Timestamp.valueOf(LocalDateTime.now()),true));
         List<GetEventResponse> expectedResult = eventList.stream()
                 .map(eventDtoConverter::convertToGetEventResponse)
                 .toList();
@@ -60,8 +58,8 @@ public class EventServiceTest {
         event.setTitle("test");
         event.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
         when(eventRepository.findEventById(1L)).thenReturn(Optional.of(event));
-        GetEventResponse getEventResponse = new GetEventResponse(1L,"test",
-                Timestamp.valueOf(LocalDateTime.now()));
+        GetEventResponse getEventResponse = new GetEventResponse(1L,"test","test_place",
+                Timestamp.valueOf(LocalDateTime.now()),true);
         when(eventDtoConverter.convertToGetEventResponse(event))
                 .thenReturn(getEventResponse);
         GetEventResponse actual = eventService.getEventById(1L);
