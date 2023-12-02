@@ -4,5 +4,7 @@ import java.sql.Timestamp;
 
 public record GetEventResponse(Long id,
                                String title,
-                               Timestamp time) {
+                               String place,
+                               Timestamp time,
+                               boolean isActive) {
 }

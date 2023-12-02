@@ -4,11 +4,13 @@ import com.group1.QRPass.dto.converter.EventDtoConverter;
 import com.group1.QRPass.dto.request.CreateEventRequest;
 import com.group1.QRPass.dto.response.EventCreatedResponse;
 import com.group1.QRPass.dto.response.GetEventResponse;
+import com.group1.QRPass.exception.EventNotFoundException;
 import com.group1.QRPass.model.Event;
 import com.group1.QRPass.repository.EventRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,5 +34,29 @@ public class EventService {
     public List<GetEventResponse> getAllEvent(){
         List<Event> events = eventRepository.findAll();
         return events.stream().map(eventDtoConverter::convertToGetEventResponse).collect(Collectors.toList());
+    }
+
+    public GetEventResponse getEventById(Long eventId) {
+        return eventDtoConverter.convertToGetEventResponse(findEventById(eventId));
+    }
+
+    public void disableEventById(Long eventId){
+       Event eventToDisable = findEventById(eventId);
+       eventToDisable.setActive(false);
+       eventRepository.save(eventToDisable);
+    }
+
+    public void enableEventById(Long eventId){
+        Event eventToEnable = findEventById(eventId);
+        eventToEnable.setActive(true);
+        eventRepository.save(eventToEnable);
+    }
+
+    private Event findEventById(Long eventId){
+        Optional<Event> event = eventRepository.findEventById(eventId);
+        if (!event.isPresent()){
+            throw new EventNotFoundException("There is no event registered in the system with the given Id");
+        }
+        return event.get();
     }
 }
