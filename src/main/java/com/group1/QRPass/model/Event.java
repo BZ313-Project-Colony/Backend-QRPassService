@@ -14,6 +14,7 @@ public class Event {
     private String place;
     private String imageUrl;
     private Integer maxParticipantNumber;
+    private boolean isActive;
 
     public Event() {
     }
@@ -25,6 +26,7 @@ public class Event {
         this.place = place;
         this.imageUrl = imageUrl;
         this.maxParticipantNumber = maxParticipantNumber;
+        this.isActive = true;
     }
 
     @Override
@@ -85,5 +87,13 @@ public class Event {
 
     public void setMaxParticipantNumber(Integer maxParticipantNumber) {
         this.maxParticipantNumber = maxParticipantNumber;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

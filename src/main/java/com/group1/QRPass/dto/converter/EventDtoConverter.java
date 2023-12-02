@@ -12,6 +12,7 @@ public class EventDtoConverter {
     }
 
     public GetEventResponse convertToGetEventResponse(Event event){
-        return new GetEventResponse(event.getId(), event.getTitle(), event.getTimestamp());
+        return new GetEventResponse(event.getId(), event.getTitle(), event.getPlace(),
+                event.getTimestamp(), event.isActive());
     }
 }

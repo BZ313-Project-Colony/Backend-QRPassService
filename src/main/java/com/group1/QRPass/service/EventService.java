@@ -37,10 +37,26 @@ public class EventService {
     }
 
     public GetEventResponse getEventById(Long eventId) {
+        return eventDtoConverter.convertToGetEventResponse(findEventById(eventId));
+    }
+
+    public void disableEventById(Long eventId){
+       Event eventToDisable = findEventById(eventId);
+       eventToDisable.setActive(false);
+       eventRepository.save(eventToDisable);
+    }
+
+    public void enableEventById(Long eventId){
+        Event eventToEnable = findEventById(eventId);
+        eventToEnable.setActive(true);
+        eventRepository.save(eventToEnable);
+    }
+
+    private Event findEventById(Long eventId){
         Optional<Event> event = eventRepository.findEventById(eventId);
         if (!event.isPresent()){
             throw new EventNotFoundException("There is no event registered in the system with the given Id");
         }
-        return eventDtoConverter.convertToGetEventResponse(event.get());
+        return event.get();
     }
 }
