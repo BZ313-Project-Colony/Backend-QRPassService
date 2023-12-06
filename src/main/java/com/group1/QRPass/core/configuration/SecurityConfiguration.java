@@ -61,6 +61,7 @@ public class SecurityConfiguration {
                 .cors(withDefaults())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/v1/auth/**").permitAll();
+                    auth.requestMatchers("/v1/events/register").permitAll();
                     auth.requestMatchers("/hello").hasAuthority("ROLE_ADMIN");
                     auth.requestMatchers("/v1/events").hasAuthority("ROLE_ADMIN");
                     auth.requestMatchers("/v1/events/**").hasAuthority("ROLE_ADMIN");

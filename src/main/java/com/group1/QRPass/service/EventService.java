@@ -52,7 +52,7 @@ public class EventService {
         eventRepository.save(eventToEnable);
     }
 
-    private Event findEventById(Long eventId){
+    protected Event findEventById(Long eventId){
         Optional<Event> event = eventRepository.findEventById(eventId);
         if (!event.isPresent()){
             throw new EventNotFoundException("There is no event registered in the system with the given Id");
