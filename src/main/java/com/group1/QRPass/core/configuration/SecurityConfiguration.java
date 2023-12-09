@@ -62,8 +62,10 @@ public class SecurityConfiguration {
                 .cors(withDefaults())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/v1/auth/**").permitAll();
+                    auth.requestMatchers("/v1/events/register").permitAll();
                     auth.requestMatchers(new AntPathRequestMatcher("/v1/events/{eventId:\\d+}","GET"))
                             .permitAll();
+                    auth.requestMatchers("/v1/tickets/**").hasAuthority("ROLE_ADMIN");
                     auth.requestMatchers("/v1/events/**").hasAuthority("ROLE_ADMIN");
                     auth.anyRequest().authenticated();
                 });
