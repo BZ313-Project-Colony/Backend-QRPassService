@@ -5,6 +5,7 @@ import com.group1.QRPass.dto.request.CreateEventRequest;
 import com.group1.QRPass.dto.request.CreateTicketRequest;
 import com.group1.QRPass.dto.response.EventCreatedResponse;
 import com.group1.QRPass.dto.response.GetEventResponse;
+import com.group1.QRPass.dto.response.GetTicketResponse;
 import com.group1.QRPass.service.EventService;
 import com.group1.QRPass.service.TicketService;
 import jakarta.mail.MessagingException;
@@ -58,4 +59,18 @@ public class EventController {
         ticketService.createTicket(createTicketRequest);
         return new ResponseEntity<>("Your ticket is created successfully", HttpStatus.CREATED);
     }
+
+    @GetMapping("/{eventId:\\d+}/tickets")
+    public ResponseEntity<List<GetTicketResponse>> getTicketsByEvent(@PathVariable Long eventId){
+        return ResponseEntity.ok(ticketService.getAllTicketByEventId(eventId));
+    }
+
+    @DeleteMapping("/{eventId:\\d+}")
+    public ResponseEntity<String> deleteEventById(@PathVariable Long eventId){
+        ticketService.deleteAllTicketsByEventId(eventId);
+        return new ResponseEntity<>("The event and related tickets are deleted successfully", HttpStatus.OK);
+    }
+
+
+
 }

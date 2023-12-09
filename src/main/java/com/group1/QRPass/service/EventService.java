@@ -8,6 +8,7 @@ import com.group1.QRPass.exception.EventNotFoundException;
 import com.group1.QRPass.model.Event;
 import com.group1.QRPass.repository.EventRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class EventService {
     private final EventRepository eventRepository;
     private final EventDtoConverter eventDtoConverter;
+
 
     public EventService(EventRepository eventRepository, EventDtoConverter eventDtoConverter) {
         this.eventRepository = eventRepository;
@@ -59,4 +61,11 @@ public class EventService {
         }
         return event.get();
     }
+
+    protected void deleteEvent(Event event){
+        eventRepository.delete(event);
+    }
+
+
+
 }

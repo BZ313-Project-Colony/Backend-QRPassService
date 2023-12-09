@@ -62,6 +62,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/v1/auth/**").permitAll();
                     auth.requestMatchers("/v1/events/register").permitAll();
+                    auth.requestMatchers("/v1/tickets/**").hasAuthority("ROLE_ADMIN");
                     auth.requestMatchers("/hello").hasAuthority("ROLE_ADMIN");
                     auth.requestMatchers("/v1/events").hasAuthority("ROLE_ADMIN");
                     auth.requestMatchers("/v1/events/**").hasAuthority("ROLE_ADMIN");

@@ -3,32 +3,34 @@ package com.group1.QRPass.model;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
-
+@Table(
+        uniqueConstraints=
+        @UniqueConstraint(columnNames={"id", "participantEmail"})
+)
 @Entity
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String participantName;
     private String participantSurname;
     private String participantEmail;
     private Timestamp registeredDate;
     private boolean isConfirmed;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private Event event;
 
     public Ticket() {
     }
 
     public Ticket(Long id, String participantName, String participantSurname, String participantEmail,
-                  Timestamp registeredDate, boolean isConfirmed, Event event) {
+                  Timestamp registeredDate, Event event) {
         this.id = id;
         this.participantName = participantName;
         this.participantSurname = participantSurname;
         this.participantEmail = participantEmail;
         this.registeredDate = registeredDate;
-        this.isConfirmed = isConfirmed;
+        this.isConfirmed = false;
         this.event = event;
     }
 

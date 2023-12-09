@@ -49,4 +49,13 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> eventNotFoundException(EmailNotValidException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(TicketNotFoundException.class)
+    public ResponseEntity<?> eventNotFoundException(TicketNotFoundException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(TicketUniqueValidateException.class)
+    public ResponseEntity<?> eventNotFoundException(TicketUniqueValidateException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }
