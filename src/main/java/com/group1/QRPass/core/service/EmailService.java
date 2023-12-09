@@ -28,7 +28,8 @@ public class EmailService {
         helper.setFrom(emailFrom);
         helper.setTo(emailTo);
         helper.setSubject(subject);
-        helper.setText("sa");
+        helper.setText("Thank you for registering " + event.getTitle() + "." + "\n Your ticket qr code is generated. " +
+                "\n You can find it below.");
         InputStreamSource qrCodeSource = new ByteArrayResource(qrCode);
         helper.addInline("qrCode", qrCodeSource, "image/png");
         mailSender.send(message);
