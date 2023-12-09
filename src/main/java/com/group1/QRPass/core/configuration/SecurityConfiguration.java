@@ -25,6 +25,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -61,8 +62,8 @@ public class SecurityConfiguration {
                 .cors(withDefaults())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/v1/auth/**").permitAll();
-                    auth.requestMatchers("/hello").hasAuthority("ROLE_ADMIN");
-                    auth.requestMatchers("/v1/events").hasAuthority("ROLE_ADMIN");
+                    auth.requestMatchers(new AntPathRequestMatcher("/v1/events/{eventId:\\d+}","GET"))
+                            .permitAll();
                     auth.requestMatchers("/v1/events/**").hasAuthority("ROLE_ADMIN");
                     auth.anyRequest().authenticated();
                 });
