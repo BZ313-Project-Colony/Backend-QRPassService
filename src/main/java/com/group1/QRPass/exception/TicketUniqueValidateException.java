@@ -3,9 +3,9 @@ package com.group1.QRPass.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class RoleNotFoundException extends RuntimeException {
-    public RoleNotFoundException(String message) {
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class TicketUniqueValidateException extends RuntimeException{
+    public TicketUniqueValidateException(String message) {
         super(message);
     }
 }

@@ -3,6 +3,7 @@ package com.group1.QRPass.model;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 public class Event {
@@ -15,6 +16,8 @@ public class Event {
     private String imageUrl;
     private Integer maxParticipantNumber;
     private boolean isActive;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Ticket> ticketList;
 
     public Event() {
     }
@@ -28,19 +31,6 @@ public class Event {
         this.maxParticipantNumber = maxParticipantNumber;
         this.isActive = true;
     }
-
-    @Override
-    public String toString() {
-        return "Event{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", timestamp=" + timestamp +
-                ", place='" + place + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", maxParticipantNumber=" + maxParticipantNumber +
-                '}';
-    }
-
     public Long getId() {
         return id;
     }
@@ -95,5 +85,13 @@ public class Event {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public List<Ticket> getTicketList() {
+        return ticketList;
+    }
+
+    public void setTicketList(List<Ticket> ticketList) {
+        this.ticketList = ticketList;
     }
 }
