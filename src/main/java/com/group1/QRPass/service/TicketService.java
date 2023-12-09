@@ -71,6 +71,7 @@ public class TicketService {
     }
 
     public List<GetTicketResponse> getAllTicketByEventId(Long eventId) {
+        eventService.checkIfEventExist(eventId);
         List<Ticket> ticketList = ticketRepository.findAllByEvent_Id(eventId);
         return ticketList.stream().map(ticketDtoConverter::convertToGetTicketResponse)
                 .collect(Collectors.toList());

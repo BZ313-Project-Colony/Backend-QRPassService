@@ -62,6 +62,12 @@ public class EventService {
         return event.get();
     }
 
+    protected void checkIfEventExist(Long eventId){
+        if (eventRepository.findEventById(eventId).isEmpty()){
+            throw new EventNotFoundException("There is no event registered in the system with the given Id");
+        }
+    }
+
     protected void deleteEvent(Event event){
         eventRepository.delete(event);
     }
