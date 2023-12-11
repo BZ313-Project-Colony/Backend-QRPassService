@@ -10,6 +10,7 @@ import com.group1.QRPass.dto.request.CreateConfirmTicketRequest;
 import com.group1.QRPass.dto.request.CreateTicketRequest;
 import com.group1.QRPass.dto.response.GetTicketResponse;
 import com.group1.QRPass.exception.EmailNotValidException;
+import com.group1.QRPass.exception.EventNotActiveException;
 import com.group1.QRPass.exception.TicketNotFoundException;
 import com.group1.QRPass.exception.TicketUniqueValidateException;
 import com.group1.QRPass.model.Event;
@@ -51,7 +52,13 @@ public class TicketService {
         if (ticketList.size() > 0)
             throw new TicketUniqueValidateException("There is already a ticket registered for this email!");
     }
+
+    private void validateIfEventActive(Long eventId){
+        if (!eventService.findEventById(eventId).isActive())
+            throw new EventNotActiveException("This event is closed for registration.");
+    }
     public void createTicket(CreateTicketRequest createTicketRequest) throws MessagingException, IOException, WriterException {
+        validateIfEventActive(createTicketRequest.eventId());
         validateEmail(createTicketRequest.email());
         validateUniqueConstraint(createTicketRequest.eventId(), createTicketRequest.email());
         String qrCodeText = String.format("Event ID: %s\nName: %s\nSurname: %s\nEmail: %s",

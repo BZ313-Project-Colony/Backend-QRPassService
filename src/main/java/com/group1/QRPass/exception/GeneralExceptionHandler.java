@@ -58,4 +58,8 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> eventNotFoundException(TicketUniqueValidateException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(EventNotActiveException.class)
+    public ResponseEntity<?> eventNotFoundException(EventNotActiveException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }
